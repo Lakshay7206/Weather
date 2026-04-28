@@ -23,7 +23,6 @@ import weather.composeapp.generated.resources.compose_multiplatform
 @Composable
 fun App() {
     MaterialTheme {
-
-
+        WeatherScreen()
     }
 }
