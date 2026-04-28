@@ -33,9 +33,11 @@ kotlin {
             implementation(libs.ktor.client.okhttp)           // OkHttp engine for Android
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.koin.android)  // for androidContext() in startKoin
+            implementation("app.cash.sqldelight:android-driver:2.0.0")// sql delight
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)           // Darwin engine for iOS
+            implementation("app.cash.sqldelight:native-driver:2.0.0") // sql delight
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -61,7 +63,9 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.compose.viewmodel.navigation)
 
-            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")// showing time
+            implementation("app.cash.sqldelight:runtime:2.0.0")// sql delight
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

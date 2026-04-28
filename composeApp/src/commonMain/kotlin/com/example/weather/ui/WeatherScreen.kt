@@ -33,6 +33,7 @@ import com.example.weather.domain.WeatherRepository
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.Instant
+import org.koin.compose.koinInject
 
 fun formatTime(instant: Instant): String {
     val local = instant.toLocalDateTime(TimeZone.currentSystemDefault())
@@ -44,8 +45,9 @@ fun formatTime(instant: Instant): String {
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WeatherScreen() {
-    val viewModel: WeatherViewModel = viewModel()
+fun WeatherScreen(
+    viewModel: WeatherViewModel = koinInject()
+) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val pullRefreshState = rememberPullToRefreshState()
 
@@ -142,7 +144,7 @@ private fun WeatherContent(weather: Weather) {
 
                 InfoItem(
                     label = "Direction",
-                    value = "${weather.windDirection}°"
+                    value = "${weather.windDirection}°N"
                 )
             }
         }

@@ -1,0 +1,27 @@
+
+CREATE TABLE weather (
+    time TEXT NOT NULL PRIMARY KEY, -- 🔥 unique constraint
+    temperature REAL,
+    windSpeed REAL,
+    windDirection INTEGER,
+    isDay INTEGER,
+    weatherCode INTEGER,
+    description TEXT
+);
+
+selectAll:
+SELECT * FROM weather ORDER BY time DESC;
+
+insertWeather:
+INSERT OR IGNORE INTO weather(
+    time, temperature, windSpeed, windDirection, isDay, weatherCode, description
+)
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+deleteOldest:
+DELETE FROM weather
+WHERE time IN (
+    SELECT time FROM weather
+    ORDER BY time ASC
+    LIMIT ?
+);

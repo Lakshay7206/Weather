@@ -12,8 +12,9 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class WeatherViewModel() : ViewModel() {
-    private val weatherRepository = WeatherRepository()
+class WeatherViewModel(
+    private val weatherRepository: WeatherRepository
+) : ViewModel() {
     private val _state = MutableStateFlow(WeatherState(isLoading = true))
     val state: StateFlow<WeatherState> = _state.asStateFlow()
     private var pollingJob: Job? = null
