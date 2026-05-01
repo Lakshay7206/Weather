@@ -18,7 +18,7 @@ kotlinx-coroutines = "1.10.2"
 kotlinx-serialization = "2.3.20"
 koin                    = "4.1.1"
 androidx-navigation     = "2.8.0-alpha10"
-
+sqldelight = "2.0.2"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -63,6 +63,11 @@ koin-compose-viewmodel-navigation = { module = "io.insert-koin:koin-compose-view
 
 # Navigation (optional but recommended)
 androidx-navigation-compose    = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
+#SQL Delight
+sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqldelight" }
+sqldelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-native = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
+sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 
 [plugins]
 
@@ -72,3 +77,4 @@ composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMul
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinx-serialization" }
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

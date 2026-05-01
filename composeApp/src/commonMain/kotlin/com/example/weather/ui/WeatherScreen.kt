@@ -34,7 +34,11 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.Instant
 import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
+import kotlin.time.ExperimentalTime
 
+
+@OptIn(ExperimentalTime::class)
 fun formatTime(instant: Instant): String {
     val local = instant.toLocalDateTime(TimeZone.currentSystemDefault())
 
@@ -45,11 +49,14 @@ fun formatTime(instant: Instant): String {
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WeatherScreen(
-    viewModel: WeatherViewModel = koinInject()
-) {
+fun WeatherScreen() {
+    val viewModel: WeatherViewModel = koinViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
     val pullRefreshState = rememberPullToRefreshState()
+    val weatherList = state.weatherList
+
+    val current = weatherList.firstOrNull()
+    val history = weatherList.drop(1)
 
     PullToRefreshBox(
         isRefreshing = state.isRefreshing,
@@ -73,7 +80,19 @@ fun WeatherScreen(
                     }
                 }
 
-                state.weather != null -> WeatherContent(state.weather!!)
+                weatherList.isNotEmpty() -> {
+                    Column {
+                        current?.let {
+                            WeatherContent(it) // 🔥 current weather
+                        }
+
+                        Spacer(Modifier.height(16.dp))
+
+                        history.forEach {
+                            WeatherHistoryItem(it) // 🔥 last 4
+                        }
+                    }
+                }
             }
         }
     }
@@ -150,7 +169,18 @@ private fun WeatherContent(weather: Weather) {
         }
     }
 }
-
+@Composable
+fun WeatherHistoryItem(weather: Weather) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(formatTime(weather.time))
+        Text("${weather.temperature}°C")
+    }
+}
 @Composable
 fun InfoItem(label: String, value: String) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {

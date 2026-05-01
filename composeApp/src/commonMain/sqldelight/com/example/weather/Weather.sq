@@ -1,5 +1,5 @@
 
-CREATE TABLE weather (
+CREATE TABLE weatherdb (
     time TEXT NOT NULL PRIMARY KEY, -- 🔥 unique constraint
     temperature REAL,
     windSpeed REAL,
@@ -10,18 +10,18 @@ CREATE TABLE weather (
 );
 
 selectAll:
-SELECT * FROM weather ORDER BY time DESC;
+SELECT * FROM weatherdb ORDER BY time DESC;
 
 insertWeather:
-INSERT OR IGNORE INTO weather(
+INSERT OR IGNORE INTO weatherdb(
     time, temperature, windSpeed, windDirection, isDay, weatherCode, description
 )
 VALUES (?, ?, ?, ?, ?, ?, ?);
 
 deleteOldest:
-DELETE FROM weather
-WHERE time IN (
-    SELECT time FROM weather
-    ORDER BY time ASC
-    LIMIT ?
+DELETE FROM weatherdb
+WHERE time NOT IN (
+    SELECT time FROM weatherdb
+    ORDER BY time DESC
+    LIMIT 5
 );

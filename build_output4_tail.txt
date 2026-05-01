@@ -1,0 +1,50 @@
+﻿
+kotlin {
+    androidTarget() // <-- please register this Android target
+}
+```
+Solution: Please register the Android target.
+
+.\gradlew : e: file:///C:/Users/Lakshya/Documents/Weather/composeApp/build.gradle.kts:15:9: Using 
+'compilerOptions(KotlinCommonCompilerOptions.() -> Unit): Unit' is an error. Kotlin target level compiler options DSL 
+is not available in this release!
+At line:1 char:1
++ .\gradlew tasks > build_output4.txt 2>&1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (e: file:///C:/U...n this release!:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+e: file:///C:/Users/Lakshya/Documents/Weather/composeApp/build.gradle.kts:16:13: Unresolved reference: jvmTarget
+SQLDelight Gradle plugin was applied but there are no databases set up.
+
+[Incubating] Problems report is available at: file:///C:/Users/Lakshya/Documents/Weather/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Build file 'C:\Users\Lakshya\Documents\Weather\composeApp\build.gradle.kts' line: 15
+
+* What went wrong:
+Script compilation errors:
+
+  Line 15:         compilerOptions {
+                   ^ Using 'compilerOptions(KotlinCommonCompilerOptions.() -> Unit): Unit' is an error. Kotlin target 
+level compiler options DSL is not available in this release!
+
+  Line 16:             jvmTarget.set(JvmTarget.JVM_11)
+                       ^ Unresolved reference: jvmTarget
+
+  Line 90:         targetSdk = libs.versions.android.targetSdk.get().toInt()
+                   ^ 'targetSdk: Int?' is deprecated. Will be removed from library DSL in v9.0. Use 
+testOptions.targetSdk or/and lint.targetSdk instead
+
+3 errors
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 45s
+Configuration cache entry stored.

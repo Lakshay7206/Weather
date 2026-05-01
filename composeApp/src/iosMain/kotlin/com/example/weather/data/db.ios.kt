@@ -1,15 +1,13 @@
 package com.example.weather.data
 
-import android.content.Context
 import app.cash.sqldelight.db.SqlDriver
-import app.cash.sqldelight.driver.android.AndroidSqliteDriver
+import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import com.example.weather.WeatherDatabase
 
-actual class DatabaseDriverFactory(private val context: Context) {
+actual class DatabaseDriverFactory {
     actual fun createDriver(): SqlDriver {
-        return AndroidSqliteDriver(
+        return NativeSqliteDriver(
             schema = WeatherDatabase.Schema,
-            context = context,
             name = "weather.db"
         )
     }

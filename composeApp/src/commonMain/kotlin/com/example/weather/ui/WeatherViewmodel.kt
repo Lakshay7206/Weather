@@ -13,6 +13,56 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class WeatherViewModel(
+    private val repo: WeatherRepository
+) : ViewModel() {
+
+    private val _state = MutableStateFlow(WeatherState(isLoading = true))
+    val state: StateFlow<WeatherState> = _state.asStateFlow()
+
+    init {
+        observeWeather()
+        startPolling()
+    }
+
+    private fun observeWeather() {
+        viewModelScope.launch {
+            repo.observeWeather().collect { list ->
+                _state.update {
+                    it.copy(
+                        weatherList = list,
+                        isLoading = false,
+                        isRefreshing = false,
+                        error = null
+                    )
+                }
+            }
+        }
+    }
+
+    private fun startPolling() {
+        viewModelScope.launch {
+            while (true) {
+                try {
+                    repo.fetchAndStore() // 🔥 ONLY DB write
+                } catch (e: Exception) {
+                    _state.update {
+                        it.copy(error = e.message)
+                    }
+                }
+            }
+        }
+    }
+
+    fun refresh() {
+        _state.update { it.copy(isRefreshing = true) }
+        viewModelScope.launch {
+            repo.fetchAndStore()
+        }
+    }
+}
+
+/*
+class WeatherViewModel(
     private val weatherRepository: WeatherRepository
 ) : ViewModel() {
     private val _state = MutableStateFlow(WeatherState(isLoading = true))
@@ -58,4 +108,4 @@ class WeatherViewModel(
         _state.update { it.copy(isRefreshing = true) }
         startPolling()
     }
-}
+}*/
